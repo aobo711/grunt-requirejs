@@ -31,13 +31,35 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('requirejs', 'Runs requirejs optimizer', function() {
     var done = this.async();
 
+    // option for build target app
+    // the options 'moduleSet' need to be added to r.js config
+    // just like: requirejs.std.options.moduleSet
+    var target = grunt.option('target');
+    var options = this.options();
+    var moduleSet = options.moduleSet;
+
+    // if target specified, build target app
+    if(target){
+      options.modules = moduleSet[target];  
+    }else{
+      // else build all
+      var modules = [];
+      for(var x in moduleSet){
+        if(moduleSet.hasOwnProperty(x)){
+          modules = modules.concat(moduleSet[x]);
+        }
+      }
+      options.modules = modules;
+    }
+    
+
     // The functions only accept the plugin
     // config as a parameter & only return the config.
     // The functions might modify the config during
     // the run or add arbitary data.
     // Calls ´done´ when all chain is comletely executed
     // Calls the ´errorhandler if an error occures during the build
-    Q.fcall(lodashCustomBuilder, this.options())
+    Q.fcall(lodashCustomBuilder, options)
       .then(jqueryCustomBuilder)
       .then(backboneCustomBuilder)
       .then(almondify)

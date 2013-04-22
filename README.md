@@ -1,5 +1,14 @@
 # grunt-requirejs [![Build Status](https://secure.travis-ci.org/asciidisco/grunt-requirejs.png?branch=master)](http://travis-ci.org/asciidisco/grunt-requirejs)
 
+## Differences from the original
+
+> Add build option 'target'
+```bash
+grunt build --target=www
+```
+
+use this to build a specified app.
+
 > Optimize [require.js](http://requirejs.org/) based projects
 
 ## Getting Started
